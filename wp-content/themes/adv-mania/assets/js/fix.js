@@ -46,6 +46,10 @@ $doc.ready(function () {
         });
     });
     setTimeout(setAdvance, 100);
+    $doc.on('click', '.total-price .btn-red', function (e) {
+        console.log(1)
+        setAdvance();
+    });
 });
 
 function setAdvance() {
@@ -56,6 +60,7 @@ function setAdvance() {
     var advance = bookingData.advanceCoefficient * sum;
     var newSum = Number(advance);
     var newSumStr = newSum + '€';
+    $doc.find('.totalRenderSum').attr('data-sum', sum);
     $doc.find('.totalRenderSum').val(newSumStr);
     $doc.find('.booking-advance__value').text(newSumStr);
 }
@@ -74,7 +79,7 @@ function setPromoCode(res) {
     var title = res.title;
     if (id <= 0 && percent <= 0) return;
     var $inp = $doc.find('.totalRenderSum');
-    var sum = parseFloat($inp.val());
+    var sum = parseFloat($inp.attr('data-sum') || $inp.val());
     if (isNaN(sum)) return;
     var discount = (percent / 100) * sum;
     var newSum = Number(sum) - Number(discount);
@@ -95,14 +100,11 @@ function setOrderPrice(sum) {
     var $inp = $doc.find('.totalRenderSum');
     var $totalPriceElement = $doc.find('.total-price__price');
     var $totalPriceSelector = $doc.find('.form-desc .tour-bottom .item-price');
-    $inp.val(newSumStr);
     $totalPriceElement.text(newSumStr);
     $totalPriceElement.attr('data-base-price', sum);
     $totalPriceElement.attr('data-total-price', sum);
-    $doc.find('.totalRenderSum').val(newSumStr);
     $totalPriceSelector.attr('data-price', newSumStr);
     $totalPriceSelector.text(newSumStr);
-    setAdvance();
 }
 
 function isJsonString(str) {
