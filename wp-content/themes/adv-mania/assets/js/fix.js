@@ -54,7 +54,7 @@ function setAdvance() {
     if (isNaN(sum)) return;
     if (bookingData.advanceCoefficient === undefined) return;
     var advance = bookingData.advanceCoefficient * sum;
-    var newSum = Number(sum) - Number(advance);
+    var newSum = Number(advance);
     var newSumStr = newSum + '€';
     $doc.find('.totalRenderSum').val(newSumStr);
     $doc.find('.booking-advance__value').text(newSumStr);

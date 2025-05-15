@@ -3,7 +3,7 @@ function adv_mania_advance_form_render() {
 	?>
     <div class="booking-advance text-section">
 		<p><?php echo pll_e( 'Advance payment for booking 20%' ) ?></p>
-        <strong class="booking-advance__value"></strong>
+        <strong class="booking-advance__value item-price"></strong>
     </div>
 	<?php
 }
