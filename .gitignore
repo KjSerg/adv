@@ -2,6 +2,7 @@ node_modules/
 wp-content/themes/adv-mania/node_modules/
 wp-content/themes/adv-mania/video/
 wp-content/themes/adv-mania/assets/video/
+wp-content/themes/adv-mania/stripe/README.md
 video/
 ../.idea/
 *.log
