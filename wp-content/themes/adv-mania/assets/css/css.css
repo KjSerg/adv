@@ -55,6 +55,7 @@
 
 .promo-code-form{
     align-items: flex-end;
+    gap: 5px;
 }
 
 .promo-code-result{

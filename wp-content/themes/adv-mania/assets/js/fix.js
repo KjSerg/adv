@@ -47,8 +47,31 @@ $doc.ready(function () {
     });
     setTimeout(setAdvance, 100);
     $doc.on('click', '.total-price .btn-red', function (e) {
-        console.log(1)
         setAdvance();
+    });
+    $doc.on('input', '.card-number', function (e) {
+        var $t = $(this);
+        var val = $t.val();
+        var length = val.length;
+        if (length === 19) {
+            $doc.find('.card-m').focus();
+        }
+    });
+    $doc.on('input', '.card-m', function (e) {
+        var $t = $(this);
+        var val = $t.val();
+        var length = val.length;
+        if (length === 2) {
+            $doc.find('.card-y').focus();
+        }
+    });
+    $doc.on('input', '.card-y', function (e) {
+        var $t = $(this);
+        var val = $t.val();
+        var length = val.length;
+        if (length === 2) {
+            $doc.find('.card-cvv').focus();
+        }
     });
 });
 
