@@ -1,0 +1,77 @@
+
+
+.form-consent-box span{
+    display: block;
+    width: 10px;
+    height: 22px;
+    border-color: #A7A6A8;
+    border-right: 2px solid;
+    border-bottom: 2px solid;
+    transition: 0.2s ease-in-out;
+    opacity: 0;
+    transform: rotate(20deg);
+}
+.form-consent-box{
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    margin-right: 12px;
+    width: 26px!important;
+    height: 26px;
+    border-radius: 6px;
+    border: 1px solid #e7343f;
+    background: rgba(0,0,0,0);
+    cursor: pointer;
+    flex-grow: 0;
+    flex-shrink: 0;
+}
+.form-consent a{
+    color: #628EFF;
+}
+.form-consent{
+    display: flex;
+    width: 100%;
+    font: 400 20rem / 150% "PP Radio Grotesk";
+    color: #000;
+}
+
+.form-consent-box input:checked + span{
+    opacity: 1;
+    transform: rotate(45deg)  translateX(-2px) translateY(-6px);
+}
+.form-consent-box input{
+    display: none;
+}
+.form-consent a:hover{
+    text-decoration: underline;
+}
+
+[disabled], .day.tour-date{
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.promo-code-form{
+    align-items: flex-end;
+}
+
+.promo-code-result{
+    font: 400 20rem / 100% "PP Radio Grotesk";
+}
+
+input.error{
+    border-color: red!important;
+}
+
+.not-active{
+    opacity: 0.8;
+    pointer-events: none!important;
+}
+
+.booking-advance{
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}

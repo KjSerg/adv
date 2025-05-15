@@ -1,0 +1,6 @@
+.post-type-orders .postbox.carbon-box .cf-container--tabbed{
+    flex-direction: column;
+}
+.post-type-orders .cf-container__tabs{
+    width: 100%;
+}
