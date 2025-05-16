@@ -27,6 +27,7 @@ class Ajax {
 
 		add_action( 'wp_ajax_nopriv_create_promo_code', [ $this, 'create_promo_code' ] );
 		add_action( 'wp_ajax_create_promo_code', [ $this, 'create_promo_code' ] );
+
 	}
 
 
@@ -62,14 +63,14 @@ class Ajax {
 				carbon_set_post_meta( $_id, 'promo_code_user_country', $country );
 				carbon_set_post_meta( $_id, 'promo_code_user_email', $email );
 				carbon_set_post_meta( $_id, 'promo_code_percent', carbon_get_theme_option( 'promo_codes_percent' ) ?: 10 );
-				$msg = pll__( 'Ваш код' ) . ' <br>'  . $post->post_title;
-				if ( $is_send = Mailer::send_promo($_id) ) {
+				$msg = pll__( 'Ваш код' ) . ' <br>' . $post->post_title;
+				if ( $is_send = Mailer::send_promo( $_id ) ) {
 					$msg .= ' <br>' . pll__( 'отправлено на email' );
 				}
 				$this->send_response( [
-					'type' => 'success',
-					'msg'  => $msg,
-					'$is_send'  => $is_send,
+					'type'     => 'success',
+					'msg'      => $msg,
+					'$is_send' => $is_send,
 				] );
 			} else {
 				$this->send_error( 'Error' );
@@ -135,10 +136,14 @@ class Ajax {
 			$wpdb->prepare( "SELECT * FROM {$wpdb->posts} WHERE post_type = 'promocode' AND post_status = 'publish' AND BINARY post_title = %s LIMIT 1", $coupon )
 		);
 		if ( $post ) {
-			$id             = $post->ID;
-			$percent        = carbon_get_post_meta( $id, 'promo_code_percent' );
-			$res['id']      = intval( $id );
-			$res['percent'] = floatval( $percent );
+			$id      = $post->ID;
+			$percent = carbon_get_post_meta( $id, 'promo_code_percent' );
+			$order   = carbon_get_post_meta( $id, 'promo_code_order' );
+			if ( ! $order ) {
+				$res['id']      = intval( $id );
+				$res['percent'] = floatval( $percent );
+
+			}
 		}
 
 		return $res;
