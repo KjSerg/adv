@@ -9,7 +9,7 @@ $url      = $var['url'];
 $url_home = $var['url_home'];
 $id       = get_the_ID();
 ?>
-<section class="hero" id="promo-head">
+<section class="hero" id="promo-head" style="margin-bottom: 100px">
     <div class="hero-wrap">
         <div class="hero-desc" data-aos="fade-up">
             <div class="hero-title"><?php echo get_the_title(); ?></div>
@@ -22,7 +22,7 @@ $id       = get_the_ID();
             </div>
         </div>
         <div class="hero-media" data-aos="fade-up">
-            <img src="<?php echo get_the_post_thumbnail_url() ?: $assets . 'img/img_4372.jpg"'; ?>" alt="main-img">
+            <img src="<?php echo get_the_post_thumbnail_url() ?: $url_home . 'img/img_4372.jpg"'; ?>" alt="main-img">
         </div>
     </div>
 </section>
