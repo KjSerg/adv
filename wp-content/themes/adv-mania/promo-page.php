@@ -59,7 +59,9 @@ $policy_page_id = (int) get_option( 'wp_page_for_privacy_policy' ) ?: 0;
                         <label><?php echo pll_e( 'Email' ); ?>
                             <span>*</span>
                         </label>
-                        <input type="email" placeholder="<?php echo pll_e( 'email placeholder' ); ?>" name='email'
+                        <input type="email"
+                               data-reg="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])"
+                               placeholder="<?php echo pll_e( 'email placeholder' ); ?>" name='email'
                                required>
                         <img src="<?php echo get_template_directory_uri(); ?>/img/mail.svg" alt="icon">
                     </div>

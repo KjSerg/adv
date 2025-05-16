@@ -76,3 +76,7 @@ input.error{
     justify-content: space-between;
     gap: 20px;
 }
+
+.form-consent.error{
+    color: red!important;
+}
