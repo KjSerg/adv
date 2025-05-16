@@ -21,7 +21,7 @@ $original_post_id = pll_get_post($translated_post_id, 'en');
         <ul data-aos="fade-up" data-aos-delay="100">
             <li><a href="<?php echo $url; ?>"><?php echo pll_e('Main');?></a></li>
             <li><a href="/tours"><?php echo pll_e('Tours');?></a></li>
-            <li><?php foreach ($terms as $term) { echo  $term->name;} ?></li>
+	        <?php if($terms) echo "<li>".$terms[0]->name."</li>" ?>
         </ul>
     </div>
 </section>
