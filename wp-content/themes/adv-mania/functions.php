@@ -45,6 +45,7 @@ get_template_part( 'functions/functions-booking' );
 get_template_part( 'functions/checkout-order' );
 get_template_part( 'functions/Ajax' );
 get_template_part( 'functions/Mailer' );
+get_template_part( 'functions/Admin' );
 get_template_part( 'functions/components' );
 
 
