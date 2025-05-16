@@ -30,9 +30,6 @@ function generate_country_select($value = ''): string {
 			$countries = []; // Резервний порожній масив
 		}
 	}
-	if(!$value){
-
-	}
 
 	// Генеруємо HTML селект
 	$output = '<select name="country" id="country" required class="country-select select">';
