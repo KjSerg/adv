@@ -248,7 +248,7 @@ function create_order_temp() {
 			if ( $coupon['id'] > 0 || $coupon['percent'] > 0 ) {
 				if ( ! carbon_get_post_meta( $coupon['id'], 'promo_code_order' ) ) {
 					carbon_set_post_meta( $post_id, 'order_promo_code_discount', '-' . $coupon['percent'] . '%' );
-					carbon_set_post_meta( $post_id, 'order_total_sum', $sum - ( ( $coupon['percent'] / 100 ) ) );
+					carbon_set_post_meta( $post_id, 'order_total_sum', ( $sum - ( $sum * ( $coupon['percent'] / 100 ) ) ) );
 					carbon_set_post_meta( $coupon['id'], 'promo_code_order', $post_id );
 				}
 			}

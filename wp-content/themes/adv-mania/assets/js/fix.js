@@ -237,7 +237,7 @@ function setPromoCode(res) {
         $res.html(resHTML);
     }
     $doc.find('.promo-code-form').addClass('not-active');
-    $doc.find('#promocode').attr('disabled', 'disabled');
+    $doc.find('#promocode').addClass('not-active');
     setOrderPrice(newSum);
 }
 
