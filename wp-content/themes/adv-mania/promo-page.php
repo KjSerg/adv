@@ -37,7 +37,7 @@ $policy_page_id = (int) get_option( 'wp_page_for_privacy_policy' ) ?: 0;
             <div class="popup-suptitle"></div>
             <div class="popup-title"><?php echo pll_e( 'Leave a Request' ); ?></div>
             <div class="popup-text"><?php echo pll_e( 'Got a question' ); ?> </div>
-            <div class="popup-form">
+            <div class="popup-form step-inner">
                 <form class='popup-form form-js' id="promo-form" action="<?php echo $admin_ajax ?>" method="post" novalidate>
                     <input type="hidden" name="action" value="create_promo_code">
                     <div class="item-input form-label">
@@ -47,12 +47,11 @@ $policy_page_id = (int) get_option( 'wp_page_for_privacy_policy' ) ?: 0;
                         <input type="text" placeholder="<?php echo pll_e( 'Name' ); ?>" name='name' required>
                         <img src="<?php echo get_template_directory_uri(); ?>/img/user.svg" alt="icon">
                     </div>
-                    <div class="item-input form-label">
-                        <label><?php echo pll_e( 'Country ' ); ?>
+                    <div class="item-input form-label label_counnrty">
+                        <label><?php echo pll_e( 'Country' ); ?>
                             <span>*</span>
                         </label>
-                        <input type="text" placeholder="<?php echo pll_e( 'Country placeholder' ); ?>" name='country'
-                               required>
+	                    <?php echo generate_country_select() ?>
                         <img src="<?php echo get_template_directory_uri(); ?>/img/globe.svg" alt="icon">
                     </div>
                     <div class="item-input form-label">

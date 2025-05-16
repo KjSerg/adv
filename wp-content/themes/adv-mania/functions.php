@@ -47,6 +47,7 @@ get_template_part( 'functions/Ajax' );
 get_template_part( 'functions/Mailer' );
 get_template_part( 'functions/Admin' );
 get_template_part( 'functions/components' );
+get_template_part( 'functions/country-select' );
 
 
 add_action( 'init', function () {
@@ -125,5 +126,9 @@ add_action( 'init', function () {
 	pll_register_string( 'Country', 'Country' );
 	pll_register_string( 'Country placeholder', 'Country placeholder' );
 	pll_register_string( 'Получить скидку', 'Получить скидку' );
-
+	pll_register_string( 'other blogs', 'other blogs' );
+	pll_register_string( 'blog', 'blog' );
+	pll_register_string( 'View all posts', 'View all posts' );
+	pll_register_string( 'Copy Link', 'Copy Link' );
+	pll_register_string( 'Share', 'Share' );
 } );
