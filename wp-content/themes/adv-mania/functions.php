@@ -119,5 +119,7 @@ add_action( 'init', function () {
 	pll_register_string( 'Вы соглашаетесь с', 'Вы соглашаетесь с' );
 	pll_register_string( 'apply', 'apply' );
 	pll_register_string( 'Advance payment for booking 20%', 'Advance payment for booking 20%' );
-
+	pll_register_string( 'other blogs', 'other blogs' );
+	pll_register_string( 'blog', 'blog' );
+	pll_register_string( 'View all posts', 'View all posts' );
 } );

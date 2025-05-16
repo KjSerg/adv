@@ -182,11 +182,43 @@
     object-fit: cover;
     object-position: bottom;
 }
+.banner-item.banner-gray .banner-media{ margin-top: 30rem;}
+.banner-item.banner-gray .banner-media img{max-height: 640rem;}     
 .rental-item__media img {
     height: 360rem;
     border-radius: 20rem;
 }
-@media screen and (max-width: 768px) {
+.reviews-info .slide{
+   height: 830rem;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+}
+.reviews-info .slide, .reviews-video .slide{
+    clip-path: polygon( 0% 2.893%,0% 2.893%,0.048% 2.424%,0.186% 1.979%,0.407% 1.564%,0.703% 1.184%,1.068% 0.847%,1.493% 0.558%,1.97% 0.323%,2.493% 0.147%,3.054% 0.038%,3.646% 0%,96.354% 0%,96.354% 0%,96.946% 0.038%,97.507% 0.147%,98.03% 0.323%,98.507% 0.558%,98.932% 0.847%,99.297% 1.184%,99.593% 1.564%,99.814% 1.979%,99.952% 2.424%,100% 2.893%,100% 95.336%,100% 95.336%,99.954% 95.797%,99.82% 96.236%,99.605% 96.646%,99.317% 97.021%,98.963% 97.357%,98.549% 97.646%,98.083% 97.883%,97.572% 98.063%,97.022% 98.18%,96.442% 98.228%,3.734% 100%,3.734% 100%,3.132% 99.972%,2.559% 99.87%,2.024% 99.7%,1.535% 99.467%,1.099% 99.178%,0.725% 98.839%,0.42% 98.457%,0.192% 98.036%,0.049% 97.585%,0% 97.108%,0% 2.893% );
+    max-height: 800rem;
+}
+.post-page .post-image img{
+    object-fit: cover;
+    height: 100%;
+    max-height: 580rem;
+}
+.post-page .post-content img {
+    height: 550rem;
+    object-fit: cover;
+    object-position: bottom;
+}
+.blog-page .item-text,
+.blog-slider .item-text{
+    display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media screen and (max-width: 768px){
     .people-item__media img {
         height: 240rem;
         object-position: bottom;

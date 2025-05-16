@@ -10,8 +10,8 @@ $thumbnail_url  = wp_get_attachment_url( get_post_thumbnail_id($post->ID) );
     <section class="bread-crumbs">
         <div class="container">
             <ul>
-                <li><a href="<?php echo $url; ?>">Main</a></li>
-                <li><a href="<?php echo $archive_link;?>">Blog</a></li>
+                <li><a href="<?php echo $url; ?>"><?php echo pll_e('Main');?></a></li>
+                <li><a href="<?php echo $archive_link;?>"><?php echo pll_e('blog');?></a></li>
                 <li><?php the_title(); ?></li>
             </ul>
         </div>
@@ -64,9 +64,9 @@ $thumbnail_url  = wp_get_attachment_url( get_post_thumbnail_id($post->ID) );
 	<section class="other-section">
 		<div class="container">
 			<div class="top-section">
-				<div class="title-section">other blogs</div>
+				<div class="title-section"><?php echo pll_e('other blogs');?></div>
 				<div class="btn-blog">
-					<a href="/blog" class="btn btn-red">View all posts</a>
+					<a href="/blog" class="btn btn-red"><?php echo pll_e('View all posts');?></a>
 				</div>
 			</div>
 			<?php
