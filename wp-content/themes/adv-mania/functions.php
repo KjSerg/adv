@@ -118,6 +118,8 @@ add_action( 'init', function () {
 	pll_register_string( 'Base_on', 'Base on' );
 	pll_register_string( 'Вы соглашаетесь с', 'Вы соглашаетесь с' );
 	pll_register_string( 'apply', 'apply' );
+	pll_register_string( 'Country', 'Country' );
+	pll_register_string( 'Country placeholder', 'Country placeholder' );
 	pll_register_string( 'Получить скидку', 'Получить скидку' );
 
 } );
