@@ -38,7 +38,7 @@ $policy_page_id = (int) get_option( 'wp_page_for_privacy_policy' ) ?: 0;
             <div class="popup-title"><?php echo pll_e( 'Leave a Request' ); ?></div>
             <div class="popup-text"><?php echo pll_e( 'Got a question' ); ?> </div>
             <div class="popup-form">
-                <form class='popup-form form-js' id="promo-form" action="<?php echo $admin_ajax ?>" novalidate>
+                <form class='popup-form form-js' id="promo-form" action="<?php echo $admin_ajax ?>" method="post" novalidate>
                     <input type="hidden" name="action" value="create_promo_code">
                     <div class="item-input form-label">
                         <label><?php echo pll_e( 'First Name and Last Name' ); ?>

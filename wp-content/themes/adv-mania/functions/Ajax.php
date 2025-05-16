@@ -62,9 +62,9 @@ class Ajax {
 				carbon_set_post_meta( $_id, 'promo_code_user_country', $country );
 				carbon_set_post_meta( $_id, 'promo_code_user_email', $email );
 				carbon_set_post_meta( $_id, 'promo_code_percent', carbon_get_theme_option( 'promo_codes_percent' ) ?: 10 );
-				$msg = pll_e( 'Ваш код' ) . ' ' . PHP_EOL . $post->post_title;
+				$msg = pll__( 'Ваш код' ) . ' <br>'  . $post->post_title;
 				if ( $is_send = Mailer::send_promo($_id) ) {
-					$msg .= ' ' . PHP_EOL . pll_e( 'отправлено на email' );
+					$msg .= ' <br>' . pll__( 'отправлено на email' );
 				}
 				$this->send_response( [
 					'type' => 'success',
