@@ -1145,7 +1145,20 @@ function crb_attach_in_promo() {
 		         Field::make( "text", "promo_code_percent", "Значение скидки, %" )
 		              ->set_attribute( 'min', '0.01' )
 		              ->set_attribute( 'max', '100' ),
+		         Field::make( "text", "promo_code_user_name", "Имя пользователя" ),
+		         Field::make( "text", "promo_code_user_country", "Страна пользователя" ),
+		         Field::make( "text", "promo_code_user_email", "Email пользователя" ),
+	         ) )
+	         ->add_tab( 'Заказ', array(
+		         Field::make( "text", "promo_code_order", "ID заказа" ),
+	         ) );
 
+	Container::make( 'theme_options', "Настройки промокодов" )
+	         ->set_page_parent( 'edit.php?post_type=promocode' )
+	         ->add_tab( 'Скидка', array(
+		         Field::make( 'text', 'promo_codes_percent', 'Скидка по-умолчанию' )
+		              ->set_attribute( 'min', '0.01' )
+		              ->set_attribute( 'max', '100' ),
 	         ) );
 }
 

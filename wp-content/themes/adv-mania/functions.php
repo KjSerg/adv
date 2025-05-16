@@ -44,6 +44,7 @@ get_template_part( 'functions/carbon-settings' );
 get_template_part( 'functions/functions-booking' );
 get_template_part( 'functions/checkout-order' );
 get_template_part( 'functions/Ajax' );
+get_template_part( 'functions/Mailer' );
 get_template_part( 'functions/components' );
 
 
@@ -118,6 +119,8 @@ add_action( 'init', function () {
 	pll_register_string( 'Base_on', 'Base on' );
 	pll_register_string( 'Вы соглашаетесь с', 'Вы соглашаетесь с' );
 	pll_register_string( 'apply', 'apply' );
+	pll_register_string( 'отправлено на email', 'отправлено на email' );
+	pll_register_string( 'Ваш код', 'Ваш код' );
 	pll_register_string( 'Country', 'Country' );
 	pll_register_string( 'Country placeholder', 'Country placeholder' );
 	pll_register_string( 'Получить скидку', 'Получить скидку' );
