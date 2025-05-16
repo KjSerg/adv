@@ -988,9 +988,6 @@ $screens_bike = carbon_get_post_meta( $original_tour_id, 'bike_screens' );
         let currentTotalPrice = parseFloat($totalPriceElement.attr('data-base-price').replace(/[^0-9.-]+/g, '')) || 0;
         const days = tourDateSelected();
         const totalItemPrice = thisItemPrice * days;
-        console.log(dataPercent);
-        console.log($selector);
-        console.log($selector.find('.item .btn-red').not($t));
 
         // console.log(`Ціна за день: ${thisItemPrice}, Загальна ціна за ${days} днів: ${totalItemPrice}`);
 

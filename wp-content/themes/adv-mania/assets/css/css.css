@@ -48,9 +48,9 @@
     text-decoration: underline;
 }
 
-[disabled], .day.tour-date{
-    opacity: 0.6;
-    pointer-events: none;
+[disabled], .day.tour-date, [disabled="disabled"]{
+    opacity: 0.6!important;
+    pointer-events: none!important;
 }
 
 .promo-code-form{

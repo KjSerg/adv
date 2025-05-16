@@ -152,6 +152,17 @@ $doc.ready(function () {
             sendRequest(data);
         }
     });
+    $(document).on('click', '.items-bikes .item .btn-red', function (e) {
+        e.preventDefault();
+        const $item = $(this).closest('.item');
+        const $t = $(this);
+        var $selector = $(document).find('.items-bikes');
+        if ($item.hasClass('selected')) {
+            $selector.find('.item .btn-red').not($t).attr('disabled', 'disabled');
+        } else {
+            $selector.find('.item .btn-red').not($t).removeAttr('disabled');
+        }
+    });
 });
 
 function sendRequest(data) {
