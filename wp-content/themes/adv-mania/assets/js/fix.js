@@ -1,5 +1,6 @@
 var $doc = $(document);
 var promo = {};
+var submitForm = false;
 
 $doc.ready(function () {
     $doc.on('click', '.set-promo-js', function (e) {
@@ -73,7 +74,129 @@ $doc.ready(function () {
             $doc.find('.card-cvv').focus();
         }
     });
+    $doc.on('submit', '.form-js', function (e) {
+        e.preventDefault();
+        var $form = jQuery(this);
+        var this_form = $form.attr('id');
+        var test = true,
+            thsInputs = $form.find('input, textarea'),
+            $select = $form.find('select[required]');
+        var $address = $form.find('input.address-js[required]');
+        $select.each(function () {
+            var $ths = jQuery(this);
+            var $label = $ths.closest('.form-label');
+            var val = $ths.val();
+            if (Array.isArray(val) && val.length === 0) {
+                test = false;
+                $label.addClass('error');
+            } else {
+                $label.removeClass('error');
+                if (val === null || val === undefined) {
+                    test = false;
+                    $label.addClass('error');
+                }
+            }
+        });
+        thsInputs.each(function () {
+            var thsInput = jQuery(this),
+                $label = thsInput.closest('.form-label'),
+                thsInputType = thsInput.attr('type'),
+                thsInputVal = thsInput.val().trim(),
+                inputReg = new RegExp(thsInput.data('reg')),
+                inputTest = inputReg.test(thsInputVal);
+            if (thsInput.attr('required')) {
+                if (thsInputVal.length <= 0) {
+                    test = false;
+                    thsInput.addClass('error');
+                    $label.addClass('error');
+                    thsInput.focus();
+                } else {
+                    thsInput.removeClass('error');
+                    $label.removeClass('error');
+                    if (thsInput.data('reg')) {
+                        if (inputTest === false) {
+                            test = false;
+                            thsInput.addClass('error');
+                            $label.addClass('error');
+                            thsInput.focus();
+                        } else {
+                            thsInput.removeClass('error');
+                            $label.removeClass('error');
+                        }
+                    }
+                }
+            }
+        });
+        if (!validationInputs($form)) return;
+        var $inp = $form.find('input[name="consent"]');
+        if ($inp.length > 0) {
+            if ($inp.prop('checked') === false) {
+                $inp.closest('.form-consent').addClass('error');
+                return;
+            }
+            $inp.closest('.form-consent').removeClass('error');
+        }
+        if (test) {
+            if (submitForm) return;
+            submitForm = true;
+            var thisForm = document.getElementById(this_form);
+            var formData = new FormData(thisForm);
+            var data = {
+                type: $form.attr('method'),
+                url: $form.attr('action'),
+                processData: false,
+                contentType: false,
+                data: formData,
+            };
+            $form.trigger('reset');
+            sendRequest(data);
+        }
+    });
 });
+
+function sendRequest(data) {
+    jQuery.ajax(data).done(function (r) {
+        if (r) {
+            if (isJsonString(r)) {
+                var res = JSON.parse(r);
+                if (res.msg !== '' && res.msg !== undefined) {
+                    showMsg(res.msg);
+                }
+            } else {
+                showMsg(r);
+            }
+        }
+        submitForm = false;
+    });
+}
+
+function validationInputs($form) {
+    var obj = {};
+    var res = true;
+    var $requiredInputs = $form.find('[data-required]');
+    $requiredInputs.each(function () {
+        var $t = jQuery(this);
+        var name = $t.attr('name');
+        if (name !== undefined) {
+            var hasChecked = $t.prop('checked') === true;
+            if (obj[name] === undefined) obj[name] = [];
+            if (hasChecked) {
+                obj[name].push($t.val());
+            }
+        }
+    });
+    for (var key in obj) {
+        var items = obj[key];
+        if (items.length === 0) {
+            res = false;
+            $form.find('[name="' + key + '"]').closest('.form-label').addClass('error');
+        } else {
+            $form.find('[name="' + key + '"]').closest('.form-label').removeClass('error');
+        }
+
+    }
+    return res;
+}
 
 function setAdvance() {
     var $inp = $doc.find('.totalRenderSum');

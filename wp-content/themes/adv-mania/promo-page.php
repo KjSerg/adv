@@ -2,12 +2,13 @@
 /*
  * Template name: Promo-code generator
  * */
-get_header(  );
+get_header();
 $var            = variables();
 $set            = $var['setting_home'];
 $assets         = $var['assets'];
 $url            = $var['url'];
 $url_home       = $var['url_home'];
+$admin_ajax     = $var['admin_ajax'];
 $id             = get_the_ID();
 $policy_page_id = (int) get_option( 'wp_page_for_privacy_policy' ) ?: 0;
 ?>
@@ -37,15 +38,16 @@ $policy_page_id = (int) get_option( 'wp_page_for_privacy_policy' ) ?: 0;
             <div class="popup-title"><?php echo pll_e( 'Leave a Request' ); ?></div>
             <div class="popup-text"><?php echo pll_e( 'Got a question' ); ?> </div>
             <div class="popup-form">
-                <form class='popup-form' id="ajax-form">
-                    <div class="item-input">
+                <form class='popup-form form-js' id="promo-form" action="<?php echo $admin_ajax ?>" novalidate>
+                    <input type="hidden" name="action" value="create_promo_code">
+                    <div class="item-input form-label">
                         <label><?php echo pll_e( 'First Name and Last Name' ); ?>
                             <span>*</span>
                         </label>
                         <input type="text" placeholder="<?php echo pll_e( 'Name' ); ?>" name='name' required>
                         <img src="<?php echo get_template_directory_uri(); ?>/img/user.svg" alt="icon">
                     </div>
-                    <div class="item-input">
+                    <div class="item-input form-label">
                         <label><?php echo pll_e( 'Country ' ); ?>
                             <span>*</span>
                         </label>
@@ -53,7 +55,7 @@ $policy_page_id = (int) get_option( 'wp_page_for_privacy_policy' ) ?: 0;
                                required>
                         <img src="<?php echo get_template_directory_uri(); ?>/img/globe.svg" alt="icon">
                     </div>
-                    <div class="item-input">
+                    <div class="item-input form-label">
                         <label><?php echo pll_e( 'Email' ); ?>
                             <span>*</span>
                         </label>
@@ -74,8 +76,8 @@ $policy_page_id = (int) get_option( 'wp_page_for_privacy_policy' ) ?: 0;
                             </div>
                         </div>
 					<?php endif; ?>
-                    <button type="submit" class="btn btn-red popup-form-btn"
-                            id="submit-btn"><?php echo pll_e( 'Send' ); ?></button>
+                    <button type="submit" class="btn btn-red popup-form-btn"><?php echo pll_e( 'Send' ); ?></button>
+					<?php wp_nonce_field( 'create_promo_code', 'true_nonce', true, true ); ?>
                 </form>
             </div>
             <div class="popup-success hidden">
