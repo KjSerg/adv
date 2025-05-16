@@ -1,5 +1,14 @@
-<!doctype <?php language_attributes(); ?>>
-<html class="no-js  page" lang="ru">
+<?php
+$var = variables();
+$url  = $var['url'];
+$logo = carbon_get_theme_option( 'crb_logo' );
+$crb_phone = carbon_get_theme_option( 'crb_phone' );
+$crb_phone_link = carbon_get_theme_option( 'crb_phone_link' );
+$social_links = carbon_get_theme_option( 'social_links' );
+?>
+
+<!doctype html>
+<html class="no-js  page" <?php language_attributes(); ?>>
 <head>
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
@@ -11,14 +20,7 @@
     <title><?php bloginfo('name'); ?><?php wp_title(); ?> </title>
     <?php wp_head(); ?>
 </head>
-<?php 
-$var = variables();
-$url  = $var['url'];
-$logo = carbon_get_theme_option( 'crb_logo' ); 
-$crb_phone = carbon_get_theme_option( 'crb_phone' ); 
-$crb_phone_link = carbon_get_theme_option( 'crb_phone_link' ); 
-$social_links = carbon_get_theme_option( 'social_links' ); 
-?>
+
 <body>
 <div class="page-wrapper">
 

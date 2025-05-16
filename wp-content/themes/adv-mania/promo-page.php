@@ -1,4 +1,4 @@
-<?php get_header();
+<?php get_header('promo');
 /*
  * Template name: Promo-code generator
  * */
