@@ -2,7 +2,7 @@
 /*
  * Template name: Promo-code generator
  * */
-get_header( 'promo' );
+get_header(  );
 $var            = variables();
 $set            = $var['setting_home'];
 $assets         = $var['assets'];
