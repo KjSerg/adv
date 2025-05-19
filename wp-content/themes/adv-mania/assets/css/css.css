@@ -48,10 +48,10 @@
     text-decoration: underline;
 }
 
-[disabled], .day.tour-date, [disabled="disabled"]{
-    opacity: 0.6!important;
-    pointer-events: none!important;
-}
+/*[disabled], .day.tour-date, [disabled="disabled"]{*/
+/*    opacity: 0.6!important;*/
+/*    pointer-events: none!important;*/
+/*}*/
 
 .promo-code-form{
     align-items: flex-end;
