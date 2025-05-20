@@ -50,7 +50,7 @@ class Ajax {
 		}
 		set_transient( "reg_attempts_$user_ip", ( $attempts ? $attempts + 1 : 1 ), 60 * 2 );
 		try {
-			$unique_code = self::generate_unique_promo_code( 10 );
+			$unique_code = self::generate_unique_promo_code( 5 );
 			$post_data   = array(
 				'post_type'   => 'promocode',
 				'post_title'  => $unique_code,
