@@ -37,7 +37,7 @@ if ($current_term) {
 </section>
 <section class="tours-page">
     <div class="container">
-    <div class="booking-calendar">
+    <!-- <div class="booking-calendar">
         <div class="calendar">
             <button id="prev" class="calendar-prev calendar-button"></button>
             <div class="month" id="current-month"></div>
@@ -47,7 +47,7 @@ if ($current_term) {
     </div>
     <div class="booking-calendar__info text-section">
     <?php echo pll_e('info calendar tour');?>
-    </div>
+    </div> -->
     <div class="top-section top-blog">
         <div class="title-section"><?php echo pll_e('Choose Your Next');?></div>
         <div class="sort-post">
@@ -186,4 +186,4 @@ if ($current_term) {
     </div>
 </section>
 <?php get_footer(); ?>
-<script src="<?php echo get_template_directory_uri(); ?>/assets/js/tours-calendar.js"></script>
+<!-- <script src="<?php echo get_template_directory_uri(); ?>/assets/js/single-one-calendar.js"></script> -->

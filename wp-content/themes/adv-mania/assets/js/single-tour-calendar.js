@@ -42,6 +42,29 @@ if (cookiepLanguage === 'tr') {
 function isPastDate(date) {
     return date < new Date();
 }
+function fetchAllBookedDates() {
+    $.ajax({
+        url: '/wp-admin/admin-ajax.php?action=get_booked_dates_total',
+        method: 'GET',
+        dataType: 'json',
+        success: function (data) {
+            if (data.success) {
+                // Очистити та оновити глобальний масив
+                bookedDates = data.data.booked_dates.map(date =>
+                    new Date(date + 'T00:00:00Z').toISOString().split('T')[0]
+                );
+                console.log(bookedDates);
+                updateCalendars(); // оновити календар одразу
+            } else {
+                console.error('Помилка у відповіді:', data);
+            }
+        },
+        error: function (error) {
+            console.error('AJAX помилка:', error);
+        }
+    });
+}
+    fetchAllBookedDates(); 
 function renderCalendar(monthOffset) {
     const monthDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + monthOffset, 1);
     const monthName = months[monthDate.getMonth()];

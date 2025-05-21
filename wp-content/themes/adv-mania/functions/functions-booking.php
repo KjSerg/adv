@@ -492,6 +492,47 @@ function load_all_posts() {
 add_action('wp_ajax_load_all_posts', 'load_all_posts');
 add_action('wp_ajax_nopriv_load_all_posts', 'load_all_posts');
 
+add_action('wp_ajax_get_booked_dates_total', 'get_all_booked_dates_total');
+add_action('wp_ajax_nopriv_get_booked_dates_total', 'get_all_booked_dates_total');
+
+function get_all_booked_dates_total() {
+    $args = [
+        'post_type'      => 'tour',
+        'post_status'    => 'publish',
+        'posts_per_page' => -1
+    ];
+
+    $query = new WP_Query($args);
+    $booked_dates = [];
+
+    if ($query->have_posts()) {
+        foreach ($query->posts as $post) {
+            $dates = carbon_get_post_meta($post->ID, 'list_date');
+
+            if (!empty($dates) && is_array($dates)) {
+                foreach ($dates as $date_entry) {
+                    $start = isset($date_entry['date_start']) ? strtotime($date_entry['date_start']) : false;
+                    $end   = isset($date_entry['date_end']) ? strtotime($date_entry['date_end']) : false;
+
+                    if ($start && $end) {
+                        $current = $start;
+
+                        while ($current <= $end) {
+                            $booked_dates[] = date('Y-m-d', $current);
+                            $current = strtotime('+1 day', $current);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    wp_send_json_success([
+        'booked_dates' => array_unique($booked_dates)
+    ]);
+}
+
+
 
 
 ?>

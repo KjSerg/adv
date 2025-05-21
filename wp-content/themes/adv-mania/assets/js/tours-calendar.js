@@ -28,6 +28,7 @@ $(document).ready(function() {
         
     });
     console.log(testDaysToHighlight);
+     
     
     const tour_id = localStorage.getItem('tour_id');
     const tour_name = localStorage.getItem('tour_title');
@@ -36,12 +37,15 @@ $(document).ready(function() {
 
     let startDate = null;  
     let endDate = null;  
-
+    const dateRanges = $.map(testDaysToHighlight, function(obj) {
+        return obj.dateMatchTest;
+    });
     function updateCalendars() {
         $('#current-month').html(renderCalendar(0)); 
         $('#next-month').html(renderCalendar(1)); 
         attachDayClickEvent();
         autoSelectDays();
+         processTourDates(dateRanges);
     }
 
     function fetchBookedDates(tourId) {
@@ -161,7 +165,7 @@ $(document).ready(function() {
             if ($('.calendar').hasClass('tour')) {
                 return;
             }
-            if (!$(this).hasClass('empty') && !$(this).hasClass('disabled') && !$(this).hasClass('booked')) {
+            if (!$(this).hasClass('empty') && !$(this).hasClass('disabled') && !$(this).hasClass('booked') ) {
                 const day = parseInt($(this).data('day'));
                 const month = parseInt($(this).data('month'));
                 const year = parseInt($(this).data('year'));
@@ -341,10 +345,7 @@ $(document).ready(function() {
         });   
     }
 
-    
-    const dateRanges = $.map(testDaysToHighlight, function(obj) {
-        return obj.dateMatchTest;
-    });
+   
     
 
     function processTourDates(dateRanges) {        

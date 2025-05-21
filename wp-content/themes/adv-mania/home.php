@@ -166,7 +166,7 @@ $screens  = carbon_get_post_meta( $id, 'screens' );
                                                         <span class="item-price__old"><?php echo $new_price_old; ?></span>
 													<?php } ?>
                                                     <a href="<?php echo get_the_permalink( $_id ); ?>"
-                                                       class="item-book btn btn-red">Book</a>
+                                                       class="item-book btn btn-red"><?php echo pll_e('View');?></a>
                                                 </div>
                                             </div>
                                         </div>
