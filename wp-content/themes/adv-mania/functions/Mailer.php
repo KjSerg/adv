@@ -30,7 +30,7 @@ class Mailer {
 		$message      = "<table style='width: 100%;'>$message</table>";
 		$headers      = "MIME-Version: 1.0" . PHP_EOL .
 		                "Content-Type: text/html; charset=utf-8" . PHP_EOL .
-		                'From: ' . self::adopt( $project_name ) . ' <info@' . $_SERVER['HTTP_HOST'] . '>' . PHP_EOL .
+		                'From: ' . self::adopt( $project_name ) . ' <noreply@' . $_SERVER['HTTP_HOST'] . '>' . PHP_EOL .
 		                'Reply-To: ' . $email . '' . PHP_EOL;
 
 		return wp_mail( $email, $form_subject, $message, $headers );

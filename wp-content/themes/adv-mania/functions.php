@@ -37,6 +37,7 @@ function advMania_enqueue_styles() {
 add_action( 'wp_enqueue_scripts', 'advMania_enqueue_styles' );
 
 
+get_template_part( 'functions/CustomCron' );
 get_template_part( 'functions/ajax-functions' );
 require_once get_template_directory() . '/functions/helper.php';
 get_template_part( 'functions/settings' );
@@ -131,4 +132,5 @@ add_action( 'init', function () {
 	pll_register_string( 'View all posts', 'View all posts' );
 	pll_register_string( 'Copy Link', 'Copy Link' );
 	pll_register_string( 'Share', 'Share' );
+	pll_register_string( 'Срок действия кода 12 мес.', 'Срок действия кода 12 мес.' );
 } );
