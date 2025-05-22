@@ -1139,7 +1139,7 @@ function crb_attach_in_promo() {
 		'singular_name' => 'элемент',
 	);
 
-	Container::make( 'post_meta', 'Информация по закaзу' )
+	Container::make( 'post_meta', 'Информация ' )
 	         ->where( 'post_type', '=', 'promocode' )
 	         ->add_tab( 'Основная информация', array(
 		         Field::make( "text", "promo_code_percent", "Значение скидки, %" )
@@ -1162,6 +1162,30 @@ function crb_attach_in_promo() {
 	         ) );
 }
 
+add_action( 'carbon_fields_register_fields', 'crb_attach_in_message_template' );
+
+function crb_attach_in_message_template() {
+
+	Container::make( 'post_meta', 'Информация' )
+	         ->where( 'post_type', '=', 'message_template' )
+	         ->add_fields( array(
+		         Field::make( 'html', 'crb_information_text', 'Подсказки' )
+		              ->set_html( get_mail_hints() )
+	         ) );
+
+	Container::make( 'theme_options', "Настройки писем" )
+	         ->set_page_parent( 'edit.php?post_type=message_template' )
+	         ->add_tab( 'Купон', array(
+		         Field::make( 'association', 'promo_code_mail', __( 'Письмо промокода' ) )
+		              ->set_max( 1 )
+		              ->set_types( array(
+			              array(
+				              'type'      => 'post',
+				              'post_type' => 'message_template',
+			              )
+		              ) )
+	         ) );
+}
 
 add_action( 'after_setup_theme', 'crb_load' );
 function crb_load() {
@@ -1189,3 +1213,14 @@ add_filter( 'crb_media_buttons_html', function ( $html, $field_name ) {
 
 	return $html;
 }, 10, 2 );
+
+function get_mail_hints(): string {
+	return "
+	<strong>$%coupon%</strong>-значение купона<br>	
+	<strong>$%coupon_discount%</strong>- значение скидки купона<br>	
+	<strong>$%coupon_name%</strong>-имя пользователя купона <br>	
+	<strong>$%coupon_country%</strong>-страна пользователя купона <br>	
+	<strong>$%coupon_email%</strong>-email пользователя купона <br>	
+	<strong></strong>- <br>	
+	";
+}
