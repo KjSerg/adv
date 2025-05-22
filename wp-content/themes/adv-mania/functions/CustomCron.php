@@ -3,6 +3,8 @@
 namespace ADV\Core;
 
 
+use WP_Error;
+
 class CustomCron {
 	private static ?self $instance = null;
 
@@ -34,13 +36,27 @@ class CustomCron {
 	}
 
 	private function initialize_actions(): void {
-		add_action( 'delete_scheduled_post', [ $this, 'delete_post_by_id' ] );
+		add_action( 'delete_scheduled_post', [ $this, 'set_post_status_to_pending' ] );
 	}
 
 	public function delete_post_by_id( $post_id ): void {
 		if ( get_post( $post_id ) ) {
 			wp_delete_post( $post_id );
 		}
+	}
+	function set_post_status_to_pending($post_id): bool|WP_Error|int {
+		if (!get_post($post_id)) {
+			return new WP_Error('invalid_post', 'ID error');
+		}
+
+		$result = wp_update_post(array(
+			'ID' => $post_id,
+			'post_status' => 'pending'
+		));
+		if (is_wp_error($result)) {
+			return $result;
+		}
+		return true;
 	}
 
 }

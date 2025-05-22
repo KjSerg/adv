@@ -25,12 +25,24 @@ class Admin {
 		$discount  = '';
 		$user      = '';
 		$email     = '';
-		$order_id  = '';
+		$orders    = '';
 		if ( $post_type === 'promocode' ) {
 			$discount = carbon_get_post_meta( $ID, 'promo_code_percent' );
 			$user     = carbon_get_post_meta( $ID, 'promo_code_user_name' ) . ' ' . carbon_get_post_meta( $ID, 'promo_code_user_country' );
 			$email    = carbon_get_post_meta( $ID, 'promo_code_user_email' );
-			$order_id = carbon_get_post_meta( $ID, 'promo_code_order' );
+			if ( $promo_code_order = carbon_get_post_meta( $ID, 'promo_code_order' ) ) {
+				$promo_code_order = explode( ',', $promo_code_order ) ?: [];
+				if ( $promo_code_order ) {
+					$promo_code_order = array_map( function ( $item ) {
+						$l = get_edit_post_link( $item );
+
+						return "<a target='_blank' href='$l'>$item</a>";
+					}, $promo_code_order );
+					if($promo_code_order){
+						$orders = implode('<hr>', $promo_code_order);
+					}
+				}
+			}
 		}
 		switch ( $column ) {
 			case 'discount':
@@ -43,7 +55,7 @@ class Admin {
 				echo $email;
 				break;
 			case 'order_id':
-				echo $order_id;
+				echo $orders;
 				break;
 		}
 	}

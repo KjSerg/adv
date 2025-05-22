@@ -132,5 +132,7 @@ add_action( 'init', function () {
 	pll_register_string( 'View all posts', 'View all posts' );
 	pll_register_string( 'Copy Link', 'Copy Link' );
 	pll_register_string( 'Share', 'Share' );
+	pll_register_string( 'Promo Code Set Successfully', 'Promo Code Set Successfully' );
+	pll_register_string( 'email and phone number restrictions', 'email and phone number restrictions' );
 	pll_register_string( 'Срок действия кода 12 мес.', 'Срок действия кода 12 мес.' );
 } );

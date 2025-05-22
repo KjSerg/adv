@@ -4,6 +4,8 @@ namespace ADV\Core;
 
 
 use ADV\Components\Mailer;
+use DateTime;
+use DateTimeZone;
 use Exception;
 
 class Ajax {
@@ -63,7 +65,7 @@ class Ajax {
 				carbon_set_post_meta( $_id, 'promo_code_user_country', $country );
 				carbon_set_post_meta( $_id, 'promo_code_user_email', $email );
 				carbon_set_post_meta( $_id, 'promo_code_percent', carbon_get_theme_option( 'promo_codes_percent' ) ?: 10 );
-				CustomCron::schedule_post_deletion($_id);
+				CustomCron::schedule_post_deletion( $_id );
 				$msg = pll__( 'Ваш код' ) . ' <br>' . $post->post_title;
 				if ( $is_send = Mailer::send_promo( $_id ) ) {
 					$msg .= ' <br>' . pll__( 'отправлено на email' );
@@ -121,30 +123,86 @@ class Ajax {
 		if ( $coupon['id'] == 0 || $coupon['percent'] == 0 ) {
 			$this->send_error( 'Invalid Promo Code' );
 		}
+		$msg = pll__( 'Promo Code Set Successfully' );
+		if ( $coupon['contacts_required'] ) {
+			$msg .= '<br>' . pll__( 'email and phone number restrictions' );
+		}
 		$this->send_response( array_merge( $coupon, [
-			'msg' => 'Promo Code Set Successfully'
+			'msg' => $msg
 		] ) );
 	}
 
-	public static function get_promo_code( $coupon ): array {
-		$res = array(
-			'id'      => 0,
-			'percent' => 0,
-			'title'   => $coupon,
+	public static function get_promo_code( $coupon, $contacts = [] ): array {
+		$res   = array(
+			'id'                => 0,
+			'percent'           => 0,
+			'title'             => $coupon,
+			'contacts_required' => false,
 		);
+		$email = $contacts['email'] ?? '';
+		$phone = $contacts['tel'] ?? '';
 		global $wpdb;
 		$post = $wpdb->get_row(
 			$wpdb->prepare( "SELECT * FROM {$wpdb->posts} WHERE post_type = 'promocode' AND post_status = 'publish' AND BINARY post_title = %s LIMIT 1", $coupon )
 		);
 		if ( $post ) {
-			$id      = $post->ID;
-			$percent = carbon_get_post_meta( $id, 'promo_code_percent' );
-			$order   = carbon_get_post_meta( $id, 'promo_code_order' );
-			if ( ! $order ) {
-				$res['id']      = intval( $id );
-				$res['percent'] = floatval( $percent );
-
+			$id                = $post->ID;
+			$percent           = carbon_get_post_meta( $id, 'promo_code_percent' );
+			$promo_code_limit  = intval( carbon_get_post_meta( $id, 'promo_code_limit' ) ?: 1 );
+			$contacts_required = carbon_get_post_meta( $id, 'promo_code_set_contacts_required' );
+			$promo_code_orders = carbon_get_post_meta( $id, 'promo_code_order' );
+			$promo_code_orders = $promo_code_orders ? explode( ',', $promo_code_orders ) : [];
+			$promo_code_orders = array_map( 'intval', $promo_code_orders );
+			if ( $contacts_required ) {
+				if ( ! $email ) {
+					return $res;
+				}
+				if ( ! $phone ) {
+					return $res;
+				}
+				if ( $email != carbon_get_post_meta( $id, 'promo_code_user_email' ) ) {
+					return $res;
+				}
+				if ( $phone != carbon_get_post_meta( $id, 'promo_code_user_tel' ) ) {
+					return $res;
+				}
 			}
+			if ( count( $promo_code_orders ) >= $promo_code_limit ) {
+				return $res;
+			}
+			$promo_code_start  = carbon_get_post_meta( $id, 'promo_code_start' );
+			$promo_code_finish = carbon_get_post_meta( $id, 'promo_code_finish' );
+			if ( $promo_code_start || $promo_code_finish ) {
+				$timezone_string = wp_timezone_string();
+				try {
+					$timezone     = new DateTimeZone( $timezone_string );
+					$current_time = new DateTime( 'now', $timezone );
+					if ( $promo_code_start ) {
+						$start_ts         = strtotime( $promo_code_start );
+						$promo_code_start = new DateTime( 'now', $timezone );
+						$promo_code_start->setTimestamp( $start_ts );
+						if ( $current_time->getTimestamp() < $promo_code_start->getTimestamp() ) {
+							return $res;
+						}
+					}
+
+					if ( $promo_code_finish ) {
+						$finish_ts         = strtotime( $promo_code_finish );
+						$promo_code_finish = new DateTime( 'now', $timezone );
+						$promo_code_finish->setTimestamp( $finish_ts );
+						if ( $current_time->getTimestamp() > $promo_code_finish->getTimestamp() ) {
+							return $res;
+						}
+					}
+				} catch ( Exception $e ) {
+					error_log( $e->getMessage() );
+
+					return $res;
+				}
+			}
+			$res['id']                = intval( $id );
+			$res['percent']           = floatval( $percent );
+			$res['contacts_required'] = boolval( $contacts_required );
 		}
 
 		return $res;

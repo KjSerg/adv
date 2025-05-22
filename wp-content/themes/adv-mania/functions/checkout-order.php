@@ -244,13 +244,31 @@ function create_order_temp() {
 	carbon_set_post_meta( $post_id, 'order_accommodation_val', $accommodation_count );
 	if ( $promo_code = filter_input( INPUT_POST, 'promo_code' ) ) {
 		carbon_set_post_meta( $post_id, 'order_promo_code', $promo_code );
-		if ( $coupon = \ADV\Core\Ajax::get_promo_code( $promo_code ) ) {
+		if ( $coupon = \ADV\Core\Ajax::get_promo_code( $promo_code, [ 'email' => $email, 'tel' => $first_phone ] ) ) {
 			if ( $coupon['id'] > 0 || $coupon['percent'] > 0 ) {
-				if ( ! carbon_get_post_meta( $coupon['id'], 'promo_code_order' ) ) {
-					carbon_set_post_meta( $post_id, 'order_promo_code_discount', '-' . $coupon['percent'] . '%' );
-					carbon_set_post_meta( $post_id, 'order_total_sum', ( $sum - ( $sum * ( $coupon['percent'] / 100 ) ) ) );
-					carbon_set_post_meta( $coupon['id'], 'promo_code_order', $post_id );
+				$order_promo_code_contacts = [];
+				$promo_code_order          = [];
+				if ( $orders = carbon_get_post_meta( $coupon['id'], 'promo_code_order' ) ) {
+					$promo_code_order = explode( ',', $orders );
 				}
+				$promo_code_order[] = $post_id;
+				if ( $promo_code_user_name = carbon_get_post_meta( $coupon['id'], 'promo_code_user_name' ) ) {
+					$order_promo_code_contacts[] = $promo_code_user_name;
+				}
+				if ( $promo_code_user_tel = carbon_get_post_meta( $coupon['id'], 'promo_code_user_tel' ) ) {
+					$order_promo_code_contacts[] = $promo_code_user_tel;
+				}
+				if ( $promo_code_user_email = carbon_get_post_meta( $coupon['id'], 'promo_code_user_email' ) ) {
+					$order_promo_code_contacts[] = $promo_code_user_email;
+				}
+				if ( $promo_code_user_country = carbon_get_post_meta( $coupon['id'], 'promo_code_user_country' ) ) {
+					$order_promo_code_contacts[] = $promo_code_user_country;
+				}
+				carbon_set_post_meta( $post_id, 'order_promo_code_discount', '-' . $coupon['percent'] . '%' );
+				carbon_set_post_meta( $post_id, 'order_total_sum', ( $sum - ( $sum * ( $coupon['percent'] / 100 ) ) ) );
+				carbon_set_post_meta( $post_id, 'order_promo_code_id', $coupon['id'] );
+				carbon_set_post_meta( $post_id, 'order_promo_code_contacts', implode( ', ', $order_promo_code_contacts ) );
+				carbon_set_post_meta( $coupon['id'], 'promo_code_order', implode( ',', $promo_code_order ) );
 			}
 		}
 	}

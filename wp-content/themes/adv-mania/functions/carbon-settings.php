@@ -1085,9 +1085,12 @@ function crb_attach_in_oder_post() {
 			              Field::make( 'text', 'info_name', __( 'Название' ) )->set_width( 70 ),
 			              Field::make( 'text', 'price', __( 'Цена' ) )->set_width( 30 ),
 		              ) ),
-		         Field::make( "text", "order_promo_code", "Промокод" )->set_width( 50 ),
-		         Field::make( "text", "order_promo_code_discount", "Скидка Промокода" )->set_width( 50 ),
 		         Field::make( "text", "order_sum", "Сумма тура" )->set_classes( 'order_sum' ),
+		         Field::make( 'separator', 'crb_separator_order_promo_code', __( 'Промокод' ) ),
+		         Field::make( "text", "order_promo_code", "Промокод" )->set_width( 25 ),
+		         Field::make( "text", "order_promo_code_id", "ID Промокода" )->set_width( 25 ),
+		         Field::make( "text", "order_promo_code_contacts", "Контакты Промокода" )->set_width( 25 ),
+		         Field::make( "text", "order_promo_code_discount", "Скидка Промокода" )->set_width( 25 ),
 		         Field::make( "text", "order_total_sum", "Сумма со скидкой" ),
 	         ) )
 	         ->add_tab( 'Участники', array(
@@ -1142,12 +1145,24 @@ function crb_attach_in_promo() {
 	Container::make( 'post_meta', 'Информация ' )
 	         ->where( 'post_type', '=', 'promocode' )
 	         ->add_tab( 'Основная информация', array(
-		         Field::make( "text", "promo_code_percent", "Значение скидки, %" )
-		              ->set_attribute( 'min', '0.01' )
-		              ->set_attribute( 'max', '100' ),
+		         Field::make( "text", "promo_code_percent", "Значение скидки, %" )->set_required( true )
+		              ->set_attribute( 'min', '1' )
+		              ->set_attribute( 'step', '0.1' )
+		              ->set_attribute( 'type', 'number' )
+		              ->set_attribute( 'max', '80' ),
 		         Field::make( "text", "promo_code_user_name", "Имя пользователя" ),
 		         Field::make( "text", "promo_code_user_country", "Страна пользователя" ),
 		         Field::make( "text", "promo_code_user_email", "Email пользователя" ),
+		         Field::make( "text", "promo_code_user_tel", "Телефон пользователя" ),
+	         ) )
+	         ->add_tab( 'Настройки', array(
+		         Field::make( "checkbox", "promo_code_set_contacts_required", "Email и Телефон должны совпадать в заказе" ),
+		         Field::make( "date_time", "promo_code_start", "Начало действия" )->set_width( 50 ),
+		         Field::make( "date_time", "promo_code_finish", "Окончание действия" )->set_width( 50 ),
+		         Field::make( "text", "promo_code_limit", "Лимит использования" )
+		              ->set_attribute( 'type', 'number' )
+		              ->set_attribute( 'step', '1' )
+		              ->set_attribute( 'min', '1' ),
 	         ) )
 	         ->add_tab( 'Заказ', array(
 		         Field::make( "text", "promo_code_order", "ID заказа" ),
@@ -1157,8 +1172,10 @@ function crb_attach_in_promo() {
 	         ->set_page_parent( 'edit.php?post_type=promocode' )
 	         ->add_tab( 'Скидка', array(
 		         Field::make( 'text', 'promo_codes_percent', 'Скидка по-умолчанию' )
-		              ->set_attribute( 'min', '0.01' )
-		              ->set_attribute( 'max', '100' ),
+		              ->set_attribute( 'type', 'number' )
+		              ->set_attribute( 'step', '0.1' )
+		              ->set_attribute( 'min', '1' )
+		              ->set_attribute( 'max', '80' ),
 	         ) );
 }
 
