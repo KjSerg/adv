@@ -84,6 +84,7 @@ function create_order_temp() {
 	$cart_res = [];
 	if ( ! empty( $cart ) ) {
 		foreach ( $cart as $item ) {
+			error_log('item phone ' . $item['phone']);
 			$cart_res[] = array(
 				'name'      => $item['name'] ?? '',
 				'country'   => $item['country'] ?? '',
@@ -99,6 +100,7 @@ function create_order_temp() {
 	$first_phone   = $first['phone'] ?? '';
 	$first_email   = $first['email'] ?? '';
 
+	error_log('$first_phone ' .$first_phone);
 	$payment_status = 'failed';
 
 	$post_id = wp_insert_post( [
@@ -244,7 +246,7 @@ function create_order_temp() {
 	carbon_set_post_meta( $post_id, 'order_accommodation_val', $accommodation_count );
 	if ( $promo_code = filter_input( INPUT_POST, 'promo_code' ) ) {
 		carbon_set_post_meta( $post_id, 'order_promo_code', $promo_code );
-		if ( $coupon = \ADV\Core\Ajax::get_promo_code( $promo_code, [ 'email' => $email, 'tel' => $first_phone ] ) ) {
+		if ( $coupon = \ADV\Core\Ajax::get_promo_code( $promo_code, [ 'email' => $email, 'tel' => $first['phone'] ] ) ) {
 			if ( $coupon['id'] > 0 || $coupon['percent'] > 0 ) {
 				$order_promo_code_contacts = [];
 				$promo_code_order          = [];
@@ -272,7 +274,6 @@ function create_order_temp() {
 			}
 		}
 	}
-
 
 	// Відправка повідомлення в Telegram
 	$lang = pll_current_language();

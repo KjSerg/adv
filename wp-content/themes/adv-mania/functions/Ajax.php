@@ -139,8 +139,6 @@ class Ajax {
 			'title'             => $coupon,
 			'contacts_required' => false,
 		);
-		$email = $contacts['email'] ?? '';
-		$phone = $contacts['tel'] ?? '';
 		global $wpdb;
 		$post = $wpdb->get_row(
 			$wpdb->prepare( "SELECT * FROM {$wpdb->posts} WHERE post_type = 'promocode' AND post_status = 'publish' AND BINARY post_title = %s LIMIT 1", $coupon )
@@ -153,7 +151,9 @@ class Ajax {
 			$promo_code_orders = carbon_get_post_meta( $id, 'promo_code_order' );
 			$promo_code_orders = $promo_code_orders ? explode( ',', $promo_code_orders ) : [];
 			$promo_code_orders = array_map( 'intval', $promo_code_orders );
-			if ( $contacts_required ) {
+			if ( $contacts_required && !empty($contacts) ) {
+				$email = $contacts['email'] ?? '';
+				$phone = $contacts['tel'] ?? '';
 				if ( ! $email ) {
 					return $res;
 				}
